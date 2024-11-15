@@ -1,22 +1,54 @@
 {% extends 'core/base.html' %}
 
 {% block title %}Welcome{% endblock %}
+{% load static %}
 
 {% block content %}
+    <div class="bg-white">
+          <div class="flex flex-col-reverse md:flex-row items-center">
+              <!-- Text Section -->
+              <div class="md:w-1/2 p-5 mt-10 md:mt-0 space-y-4">
+                  <h1 class="text-4xl font-bold md:text-5xl mb-4">
+                      Find your <span class="text-teal-500">perfect space</span> easy, affordable, and student-friendly
+                  </h1>
+                  <p class="text-lg text-gray-600 mb-4 pb-2">
+
+                  </p>
+                  
+                  <div class="space-x-3">
+                      <a href="{% url 'item:items' %}" class="btn bg-teal-500 text-white py-3 px-9 rounded-lg hover:bg-teal-600 transition duration-300">Find Now</a>
+                      <a href="{% url 'core:signup' %}" class="btn bg-teal-500 text-white py-3 px-9 rounded-lg hover:bg-teal-600 transition duration-300">Sign Up</a>
+                  </div>
+              </div>
+              <!-- Image Carousel Section-->
+              <div class="md:w-1/2 swiper mySwiper">
+                  <div class="relative swiper-wrapper">
+                    <div class="swiper-slide">
+                    <img src="{% static 'img/room_picture.jpg' %}" class="w-full h-auto rounded-lg shadow-md transition-opacity duration-700 opacity-100" alt="Room 1">
+                    </div>
+                    <div class="swiper-slide">
+                          <img src="" class="w-full h-auto rounded-lg shadow-md transition-opacity duration-700 opacity-0" alt="Carousel Image 2">
+                    </div>
+{#                    <div class="swiper-button-next"></div>#}
+{#                    <div class="swiper-button-prev"></div>#}
+                  </div>
+              </div>
+          </div>
+    </div>
      <div class="mt-6 px-6 py-12 p    bg-gray-100 rounded-xl">
-        <h2 class="mb-12 text-2xl text-center">Newest items</h2>
+        <h2 class="mb-12 text-2xl text-center">Recently Added</h2>
 
         <div class="grid grid-cols-3 gap-3">
             {% for item in items %}
                 <div>
                     <a href="{% url 'item:detail' item.id %}">
                         <div>
-                            <img src="{{ item.image.url }}" class="rounded-t-xl w-full h-60 object-cover" alt="{{ item.name }}">
+                            <img src="{{ item.image.url }}" class="rounded-t-xl object-cover" alt="{{ item.name }}">
                         </div>
 
                         <div class="p-6 bg-white rounded-b-xl">
                             <h2 class="text-2xl">{{ item.name }}</h2>
-                            <p class="text-gray-500">Price: {{ item.price }}</p>
+                            <p class="text-gray-500 text-xl">₹ {{ item.price }}</p>
                         </div>
                     </a>
                 </div>
@@ -25,7 +57,7 @@
      </div>
 
     <div class="mt-6 px-6 py-12 p    bg-gray-100 rounded-xl">
-        <h2 class="mb-12 text-2xl text-center">Categories</h2>
+        <h2 class="mb-12 text-2xl text-center">Room Types</h2>
 
         <div class="grid grid-cols-3 gap-3">
             {% for category in categories %}

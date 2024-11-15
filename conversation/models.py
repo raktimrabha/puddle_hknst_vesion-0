@@ -4,8 +4,8 @@ from django.db import models
 from item.models import Item
 
 class Conversation(models.Model):
-    item = models.ForeignKey(Item, related_name='conversations', on_delete=models.CASCADE)
-    members = models.ManyToManyField(User, related_name='conversations')
+    item = models.ForeignKey(Item, related_name='conversation', on_delete=models.CASCADE)
+    members = models.ManyToManyField(User, related_name='conversation')
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
 

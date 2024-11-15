@@ -2,24 +2,35 @@
 
 <html lang="">
     <head>
+        {% load static %}
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'favicon_io/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'favicon_io/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon_io/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'favicon_io/site.webmanifest' %}">
 
         <script src="https://cdn.tailwindcss.com"></script>
-        <title>{% block title %} {% endblock %} | Puddle</title>
+        <title>{% block title %} {% endblock %} | hakoNest</title>
 
     </head>
 
     <body>
-        <nav class="py-6 px-6 flex justify-between items-center border-b border-gray200">
-            <a href="/" class="text-xl font-semibold">Puddle</a>
+        <nav class="py-6 px-6 flex justify-between items-center shadow-md">
+            <a href="/" class="text-4xl font-semibold flex items-center">
+                <img src="{% static 'favicon_io/apple-touch-icon.png' %}" alt="hakoNest logo" class="h-12 w-auto">
+               <span class="px-2">hakoNest</span>
+            </a>
             <div class="space-x-6">
-                <a href="{% url 'item:new' %}" class="text-lg font-semibold hover:text-gray-500">New item</a>
-                <a href="{% url 'item:items' %}" class="text-lg font-semibold hover:text-gray-500">Browse</a>
+                <a href="{% url 'item:new' %}" class="text-lg font-semibold hover:text-gray-500">Add Property</a>
+                <a href="{% url 'item:items' %}" class="text-lg font-semibold hover:text-gray-500">Find Your Place</a>
 
                 {% if request.user.is_authenticated %}
-                    <a href="#" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
+                    <a href="{% url 'conversation:inbox' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Inbox</a>
                     <a href="{% url 'dashboard:index' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Dashboard</a>
+                    <a href="{% url 'core:logout' %}" class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-red-700">Logout</a>
                 {% else %}
                     <a href="{% url 'core:signup' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700">Sign Up</a>
                     <a href="{% url 'core:login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Log In</a>
@@ -27,23 +38,36 @@
             </div>
         </nav>
         <div class="px-6 py-6">
+            {% if messages %}
+            	<div class="messages">
+                    {% for message in messages %}
+                    	<div class="alert alert-{{ message.tags }} text-red-400">{{ message }}</div>
+                    {% endfor %}
+
+                </div>
+            {% endif %}
             {% block content %}
             {% endblock %}
         </div>
 
-        <footer class="py-6 px-6 flex justify-between bg-gray-800">
+        <footer class="py-6 px-6 flex justify-between bg-gray-800" id="about">
             <div class="w-2/3 pr-10">
-                <h3 class="mb-5 font-semibold text-gray-400">About</h3>
+                <h3 class="mb-5 font-semibold text-white text-2xl" >About</h3>
+                <p class="text-lg text-white">
+                    Welcome to hakoNest, your go-to platform for finding the perfect student accommodation.
+                    Our mission is to simplify the process of finding rooms, apartments, and PG accommodations
+                    for students. Whether you're a student looking for a comfortable place to stay or a landlord
+                    wanting to list a property, hakoNest connects you directly, with no hidden fees or complications.
+                </p><br>
 
                 <p class="text-lg text-gray-500">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                    Amet dignissimos dolore ducimus magnam quam quia quidem quo rem
-                    saepe tenetur. Facilis fugit modi nostrum, perferendis possimus
-                    veritatis! Dolor maxime, provident.
+                            <a class="text-white hover:text-teal" href="#">&copy; hakoNest</a> 2024, All Right Reserved. Made By
+                    <a class="text-white hover:text-white-700" href="https://raktimrabha.com">Raktim Rabha</a> and
+                    <a class="text-white hover:text-white-700" href="#">Aman Magar</a>
                 </p>
             </div>
              <div class="w1/3">
-                    <h3 class="mb-5 font-semibold text-gray-400">Menu</h3>
+                    <h3 class="mb-5 font-semibold text-gray-400">Links</h3>
 
                     <ul class="space-y-2">
                         <li><a href="#" class="text-lg text-teal-500 hover:text-teal-700">About</a></li>
